@@ -3,9 +3,8 @@ package ilu2;
 public class Welcome {
 	
 	public static String welcome(String input) {
-		StringBuilder output = new StringBuilder();
-		output.append("Hello, ");
-		if (input==null || input.trim().equals("")) {
+		StringBuilder output = new StringBuilder("Hello, ");
+		if (isNullOrEmpty(input)) {
 			output.append("my friend");
 		}
 		else {
@@ -14,11 +13,16 @@ public class Welcome {
 				output.append(input.toUpperCase() + " !");
 			}
 			else {
-				output.append(firstLettertoUpperCase(input));
+				String[] names = input.split(",");
+				output.append(firstLettertoUpperCase(names[0]));
+				if (names.length==2) {
+					output.append(", " + firstLettertoUpperCase(names[1]));
+				}
 			}
 		}
 		return output.toString();
 	}
+	
 	
 	private static String firstLettertoUpperCase(String input) {
 		char[] inputChar = input.toCharArray();
@@ -27,6 +31,9 @@ public class Welcome {
 		
 	}
 	
+	private static boolean isNullOrEmpty(String input) {
+		return input==null || input.trim().equals("");
+	}
 	
 	private static boolean isUpperCase(String input) {
 		return input.equals(input.toUpperCase());
