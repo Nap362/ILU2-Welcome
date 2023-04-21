@@ -7,13 +7,23 @@ public class Welcome {
 		if (isNullOrEmpty(input)) {
 			output.append(", my friend");
 		} else {
-			if (isUpperCase(input)) {
+			String[] names = input.split(",");
+			StringBuilder upperOutput = new StringBuilder();
+			StringBuilder lowerOutput = new StringBuilder();
+			for (String name : names) {
+				if (isUpperCase(name)) {
+					upperOutput.append(", " + name);
+				} else {
+					lowerOutput.append(", " + firstLettertoUpperCase(name));
+				}
+			}
+			if (lowerOutput.isEmpty()) {
 				output.replace(0, 5, "HELLO");
-				output.append(", " + input.toUpperCase() + " !");
+				output.append(upperOutput + " !");
 			} else {
-				String[] names = input.split(",");
-				for (String name : names) {
-					output.append(", " + firstLettertoUpperCase(name));
+				output.append(lowerOutput);
+				if (!upperOutput.isEmpty()) {
+					output.append(". AND HELLO" + upperOutput + " !");
 				}
 			}
 		}
