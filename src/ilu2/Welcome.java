@@ -17,17 +17,28 @@ public class Welcome {
 					lowerOutput.append(", " + firstLettertoUpperCase(name));
 				}
 			}
+			
 			if (lowerOutput.isEmpty()) {
 				output.replace(0, 5, "HELLO");
-				output.append(upperOutput + " !");
+				output.append(deleteLastComma(upperOutput).toUpperCase() + " !");
 			} else {
-				output.append(lowerOutput);
+				output.append(deleteLastComma(lowerOutput));
 				if (!upperOutput.isEmpty()) {
-					output.append(". AND HELLO" + upperOutput + " !");
+					output.append(". AND HELLO" + deleteLastComma(upperOutput).toUpperCase() + " !");
 				}
 			}
 		}
 		return output.toString();
+	}
+	
+	private static String deleteLastComma(StringBuilder list) {
+		int last = list.lastIndexOf(",");
+		int first = list.indexOf(",");
+		/* no occurence of "," -> last=first= -1 / 1 occurence of "," -> last=first only 1 name */
+		if (last!=first) {
+			list.replace(last, last+1, " and");
+		}
+		return list.toString();
 	}
 
 	private static String firstLettertoUpperCase(String input) {
