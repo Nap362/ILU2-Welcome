@@ -12,9 +12,9 @@ public class Welcome {
 			StringBuilder lowerOutput = new StringBuilder();
 			for (String name : names) {
 				if (isUpperCase(name)) {
-					upperOutput.append(", " + name);
+					upperOutput.append(", " + name.strip());
 				} else {
-					lowerOutput.append(", " + firstLettertoUpperCase(name));
+					lowerOutput.append(", " + firstLettertoUpperCase(name.strip()));
 				}
 			}
 			
