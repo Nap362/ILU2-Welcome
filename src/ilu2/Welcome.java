@@ -25,6 +25,7 @@ public class Welcome {
 		return output;
 	}
 
+	/* write occurences if more than one */
 	private static String timesToString(int number) {
 		if (number > 1) {
 			return " (x" + number + ")";
@@ -32,6 +33,7 @@ public class Welcome {
 		return "";
 	}
 
+	/* count occureneces for each names */
 	private static int[] getNbrOccurence(String[] names) {
 		int[] index = new int[names.length];
 		for (int i = 0; i < names.length; i++) {
@@ -45,6 +47,10 @@ public class Welcome {
 		return index;
 	}
 
+	/*
+	 * return first index of the name to find (never -1 because name always present
+	 * at least 1 time)
+	 */
 	private static int getIndexFirst(String[] names, String toFind) {
 		for (int i = 0; i < names.length; i++) {
 			if (names[i].strip().equals(toFind)) {
@@ -54,20 +60,33 @@ public class Welcome {
 		return -1;
 	}
 
+	/* make output if input of welcome not null */
 	private static String fusionUpperAndLower(StringBuilder lowerOutput, StringBuilder upperOutput) {
 		StringBuilder output = new StringBuilder();
-		if (lowerOutput.isEmpty()) {
-			output.append("HELLO" + deleteLastComma(upperOutput).toUpperCase() + " !");
-		} else {
-			output.append("Hello" + deleteLastComma(lowerOutput));
+		if (!lowerOutput.isEmpty()) {
+			output.append(addHello(lowerOutput));
 			if (!upperOutput.isEmpty()) {
-				output.append(". AND HELLO" + deleteLastComma(upperOutput).toUpperCase() + " !");
+				output.append(". AND ");
 			}
+		}
+		if (!upperOutput.isEmpty()) {
+			output.append(addHello(upperOutput).toUpperCase() + " !");
 		}
 		return output.toString();
 	}
 
-	private static String deleteLastComma(StringBuilder list) {
+	/* add hello to list of names by considering presence of yoda */
+	private static String addHello(StringBuilder names) {
+		StringBuilder output = new StringBuilder();
+		if (names.indexOf("Yoda") != -1 || names.indexOf("YODA") != -1) {
+			output.append(deleteLastComma(names).replace(0, 2, "") + ", Hello");
+		} else {
+			output.append("Hello" + deleteLastComma(names));
+		}
+		return output.toString();
+	}
+
+	private static StringBuilder deleteLastComma(StringBuilder list) {
 		int last = list.lastIndexOf(",");
 		int first = list.indexOf(",");
 		/*
@@ -77,7 +96,7 @@ public class Welcome {
 		if (last != first) {
 			list.replace(last, last + 1, " and");
 		}
-		return list.toString();
+		return list;
 	}
 
 	private static String firstLettertoUpperCase(String input) {
